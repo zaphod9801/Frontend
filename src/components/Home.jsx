@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import {
-    Heading, Center, Icon, Spacer, Input, Box, Flex, Grid, VStack, StackDivider, Button, InputGroup, InputRightElement, Text
+    Heading, Center, Icon, Spacer, Input, Box, Flex, Grid, VStack, StackDivider, Button, InputGroup, InputRightElement, Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import { gql, useQuery } from '@apollo/client';
-import {NotificationItem} from './NotificationItem';
+import { NotificationItem } from './NotificationItem';
+import { MenuH } from './Menu';
 
 
 const getProductItems = gql`{
@@ -30,15 +31,16 @@ export function Home() {
             document.title = "Inicio";
             setProducts(data.productItems);
 
-        }
+        },
+        refetchInterval: 1000
     }
-
     );
+    
 
     return (
 
         <>
-
+           <MenuH/>
             <Center>
                 <Box bgColor="orange.100" px={10} pb={5} mt={6} borderRadius="3xl">
                     <VStack>
@@ -49,7 +51,7 @@ export function Home() {
                         </Box>
                         <Box>
                             <div className="scrollable-div">
-                                <VStack>
+                                <VStack spacing={4}>
 
                                     {products.map(product => (
                                         <NotificationItem key={product.id} {...product} />
