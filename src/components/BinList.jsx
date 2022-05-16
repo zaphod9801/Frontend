@@ -70,11 +70,11 @@ export function BinList() {
     const [create] = useMutation(createSmartBin, {
         variables: {
             name: `${name}`
-        }
+        },
+        refetchQueries: [{query: getThings}],
     });
     const onSubmit = async (values) => {
         create();
-        window.location.reload(false);
 
     };
     

@@ -83,13 +83,13 @@ export function ProductList() {
             productId: `${idProduct}`,
             quantity: 1,
             productLot: "melo",
-        }
+        },
+        refetchQueries: [{query: getProductItems}],
     });
     const onSubmit = async (values) => {
         
         console.log(idProduct);
         create();
-        window.location.reload(false);
      
     };
 
