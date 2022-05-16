@@ -5,10 +5,18 @@ import {
     MenuList,
     MenuItem,
 } from "@chakra-ui/react";
-import { BiMenu, BiHomeAlt, BiBasket, BiCylinder, BiUser } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { BiMenu, BiHomeAlt, BiBasket, BiCylinder, BiUser, BiExit } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
 
 export function MenuH() {
+
+    let navigate = useNavigate()
+    const exit = () => {
+
+        localStorage.removeItem('token');
+        navigate('/');
+
+    };
 
     return (
 
@@ -23,7 +31,7 @@ export function MenuH() {
             >
                 <Icon as={BiMenu} w={10} h={10} mt={4} />
             </MenuButton>
-            <MenuList bgColor="orange.100" color="green" h="500px">
+            <MenuList bgColor="orange.100" color="green" h="500px" pb={100}>
                 <Link to={'/inicio'}>
                     <MenuItem icon={<BiHomeAlt />} >
                         Inicio
@@ -44,6 +52,11 @@ export function MenuH() {
                         Perfil
                     </MenuItem>
                 </Link>
+
+                <MenuItem mt={60}>
+                    <Button colorScheme='red' variant='outline' leftIcon={<BiExit />} onClick={exit}
+                    > Cerrar Sesión  </Button>
+                </MenuItem>
             </MenuList>
         </Menu>
     )
