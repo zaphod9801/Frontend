@@ -16,7 +16,7 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { MenuH } from './Menu';
 import { useForm } from 'react-hook-form';
 import { FaPlus } from "react-icons/fa";
-import { BiCart, BiTrash } from "react-icons/bi";
+import { BiCart, BiTrash, BiCylinder } from "react-icons/bi";
 import { BinItem } from "./BinItem.";
 
 
@@ -71,13 +71,13 @@ export function BinList() {
         variables: {
             name: `${name}`
         },
-        refetchQueries: [{query: getThings}],
+        refetchQueries: [{ query: getThings }],
     });
     const onSubmit = async (values) => {
         create();
 
     };
-    
+
 
     return (
 
@@ -89,9 +89,12 @@ export function BinList() {
 
                     <VStack>
                         <Box mb={-4}>
-                            <Heading as="h1" size="lg" p={4}>
-                                Canecas
-                            </Heading>
+                            <HStack>
+                                <Icon as={BiCylinder} color="green" w={10} h={10} mb={2} />
+                                <Heading as="h1" size="lg" p={4} color="green">
+                                    Canecas
+                                </Heading>
+                            </HStack>
                         </Box>
                         <Center>
                             <Box>

@@ -1,81 +1,106 @@
-import { useState, useEffect, useRef } from "react";
-import { Heading, Center, Icon, Spacer, Input, Box, Flex } from "@chakra-ui/react";
-import { BiSearchAlt } from "react-icons/bi";
-import * as API from "../services/getInfo";
-import { UserItem } from "./UserItem";
+import React, { useState } from "react";
+import {
+  Heading, Center, Icon, Spacer, Input, Box, Flex, Grid, VStack, StackDivider, Button, InputGroup, InputRightElement, Text, SimpleGrid, HStack, List, ListItem, Select
+} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import "./styles.css";
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { ProviderItem } from './ProviderItem';
+import { MenuH } from './Menu';
+import { BiUser } from "react-icons/bi";
 
+
+export const getMe = gql`{
+  me {
+    id
+    firstName
+    lastName
+    email
+  }
+  productProviders(findProductProviderInput:{}){
+    id
+    name
+  }
+  }`
 
 
 
 export function User() {
-  const [user, setUser] = useState({});
-  const [emails, setEmails] = useState([])
-  const [repos, setRepos] = useState([]);
-  const [orgs, setOrgs] = useState([]);
 
-  const usernameRef = useRef();
+  const [me, setMe] = useState({});
+  const [providers, setProviders] = useState([]);
 
-  const handleUserSearch = () => {
-    var usernameP = usernameRef.current.value;
-    const username = usernameP.split(' ').join('');
-    if (user === '') return;
+  const { loading, error, data } = useQuery(getMe, {
 
-    setUser(async (req, res) => {
-      try {
-        const res = await API.getUserByUsername(username);
-        return setUser(res);
-      } catch (message) {
-        return console.log(message);
-      }
-    });
-
-    API.getMailsByUsername().then(setEmails);
-    API.getReposByUsername(username).then(setRepos);
-    API.getOrgsByUsername().then(setOrgs);
-
-
-    usernameRef.current.value = null;
+    pollInterval: 1,
+    onCompleted: (data) => {
+      document.title = "Perfil";
+      setMe(data.me);
+      setProviders(data.productProviders);
+    },
+    refetchInterval: 1000
   }
 
-  useEffect(() => {
-    document.title = "Git hub users"
-  }, []);
+  );
+
 
 
   return (
+
     <>
 
+      <MenuH />
       <Center>
-        <Heading as="h1" size="lg" m={4}>
-          Github Users
-        </Heading>
+        <Box bgColor="orange.100" px={10} pb={5} mt={6} mb={5} w='400px' borderRadius="3xl" >
+          <VStack>
+            <Box mb={-4}>
+              <HStack>
+                <Icon as={BiUser} color="green" w={10} h={10} mb={2} />
+                <Heading as="h1" size="lg" p={4} color="green">
+                  Perfil
+                </Heading>
+              </HStack>
+            </Box>
+            <Center>
+              <Box>
+                <div className="scrollable-divC">
+                  <List spacing={4}>
+
+                    <ListItem>
+                      <Text fontSize="xl" color="gray.500">
+                        Nombre: <strong>{me.firstName}</strong>
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <Text fontSize="xl" color="gray.500">
+                        Apellido: <strong>{me.lastName}</strong>
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      <Text fontSize="xl" color="gray.500">
+                        Correo: <strong>{me.email}</strong>
+                      </Text>
+                    </ListItem>
+                  </List>
+                </div>
+                <Box >
+                  <div className="scrollable-divC">
+                    <VStack spacing={4}>
+
+                      {providers.map(provider => (
+                        <ProviderItem key={provider.id} {...provider} />
+                      ))}
+                    </VStack>
+
+                  </div>
+                </Box>
+              </Box >
+            </Center>
+          </VStack>
+        </Box>
       </Center>
-      <Flex mt={-4}>
-        <Box p='4'>
-
-        </Box>
-        <Spacer />
-        <Box p='4'>
-          <Input ref={usernameRef} variant='filled' placeholder="Username" _placeholder={{ color: 'black' }} htmlSize={30} width='auto' />
-          <button onClick={handleUserSearch} > <Icon as={BiSearchAlt} color="blue.500" w={7} h={7} ml={3} mt={1} mb={-3}> </Icon> </button>
-        </Box>
-      </Flex>
-
-
-
-      {!user === 0 ? (
-        <div> Loading... </div>
-
-      ) : (
-
-        <section>
-          <UserItem user={user} emails={emails} repos={repos} orgs={orgs} />
-        </section>
-      )
-      }
-
-
     </>
+
   )
 
 }

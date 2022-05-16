@@ -16,7 +16,8 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { ProductItem } from './ProductItem';
 import { MenuH } from './Menu';
 import { useForm } from 'react-hook-form';
-import {FaPlus} from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import { BiBasket } from "react-icons/bi";
 
 
 export const getProductItems = gql`{
@@ -41,7 +42,7 @@ export function ProductList() {
     const [products, setProducts] = useState([]);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [idProduct, setIdProduct] = useState("");
- 
+
     const {
         handleSubmit,
         register,
@@ -76,21 +77,21 @@ export function ProductList() {
       }
     
     `
-    
-    
+
+
     const [create] = useMutation(createProductItem, {
         variables: {
             productId: `${idProduct}`,
             quantity: 1,
             productLot: "melo",
         },
-        refetchQueries: [{query: getProductItems}],
+        refetchQueries: [{ query: getProductItems }],
     });
     const onSubmit = async (values) => {
-        
+
         console.log(idProduct);
         create();
-     
+
     };
 
     return (
@@ -102,9 +103,12 @@ export function ProductList() {
                 <Box bgColor="orange.100" px={10} pb={5} mt={6} mb={5} borderRadius="3xl">
                     <VStack>
                         <Box mb={-4}>
-                            <Heading as="h1" size="lg" p={4}>
-                                Productos
-                            </Heading>
+                            <HStack>
+                                <Icon as={BiBasket} color="green" w={10} h={10} mb={2} />
+                                <Heading as="h1" size="lg" p={4} color="green">
+                                    Productos
+                                </Heading>
+                            </HStack>
                         </Box>
                         <Box>
                             <div className="scrollable-div">
@@ -116,8 +120,8 @@ export function ProductList() {
                                 </SimpleGrid>
                             </div>
                             <Box m={3} ml={630}>
-                                    <Button colorScheme='green' variant='solid' onClick={onOpen} leftIcon={<FaPlus />} 
-                                    > Agregar Producto  </Button>
+                                <Button colorScheme='green' variant='solid' onClick={onOpen} leftIcon={<FaPlus />}
+                                > Agregar Producto  </Button>
                             </Box>
                         </Box >
                     </VStack>
@@ -166,7 +170,7 @@ export function ProductList() {
                                 Cancelar
                             </Button>
                             <Button colorScheme='green' variant='solid'
-                                        type='submit' isLoading={isSubmitting}> Crear  </Button>
+                                type='submit' isLoading={isSubmitting}> Crear  </Button>
                         </DrawerFooter>
                     </form>
                 </DrawerContent>

@@ -43,7 +43,7 @@ export function BinItem(caneca) {
                     <VStack>
                         <Text key={caneca.id} fontSize="md" mr={110} mt={3} color="gray.500"> {caneca.name}</Text>
                     </VStack>
-                    <Box ml={165}>
+                    <Box ml={145}>
                         <Button colorScheme='red' variant='outline' size='sm' leftIcon={<BiTrash />} onClick={eliminate}> Eliminar  </Button>
                     </Box>
                 </Box>

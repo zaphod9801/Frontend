@@ -18,7 +18,7 @@ export function ProductItemDetails(product) {
         imageUrl: 'https://picsum.photos/500/500',
         imageAlt: 'Rear view of modern home with pool',
         title: `${product.product.name}`,
-        formattedPrice: `${product.product.price}`,
+        formattedPrice: `${product.product.price}$`,
         reviewCount: `${product.quantity}`,
         beds: `${product.product.brand.name}`,
     }

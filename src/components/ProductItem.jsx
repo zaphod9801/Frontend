@@ -10,6 +10,7 @@ export function ProductItem(product) {
         imageUrl: 'https://picsum.photos/500/500',
         imageAlt: 'Rear view of modern home with pool',
         title: `${product.product.name}`,
+        reviewCount: `${product.quantity}`,
     }
 
     return (
@@ -30,6 +31,11 @@ export function ProductItem(product) {
                             noOfLines={1}
                         >
                             {property.title}
+                        </Box>
+                        <Box display='flex' mt='2' alignItems='center'>
+                            <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+                                {property.reviewCount} unidades
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
