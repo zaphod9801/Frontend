@@ -31,7 +31,7 @@ export function MenuH() {
             >
                 <Icon as={BiMenu} w={10} h={10} mt={4} />
             </MenuButton>
-            <MenuList bgColor="orange.100" color="green" h="500px" pb={100}>
+            <MenuList bgColor="orange.100" color="green" h="450px">
                 <Link to={'/inicio'}>
                     <MenuItem icon={<BiHomeAlt />} >
                         Inicio

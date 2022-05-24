@@ -26,6 +26,19 @@ export function NotificationItem(product) {
         }
     });
 
+    const buying = async () => {
+
+        buy()
+
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Compra exitosa',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+
     return (
 
         <>
@@ -39,7 +52,7 @@ export function NotificationItem(product) {
                         </Text>
                     </VStack>
                     <Box ml={320}>
-                        <Button colorScheme='green' leftIcon={<BiCart />} variant='solid' onClick={buy} size='sm' > Comprar  </Button>
+                        <Button colorScheme='green' leftIcon={<BiCart />} variant='solid' onClick={buying} size='sm' > Comprar  </Button>
                     </Box>
                 </Box>
                 : product.quantity < 41 ?
@@ -51,7 +64,7 @@ export function NotificationItem(product) {
                             </Text>
                         </VStack>
                         <Box ml={320}>
-                            <Button colorScheme='green' leftIcon={<BiCart />} variant='solid' onClick={buy} size='sm' > Comprar  </Button>
+                            <Button colorScheme='green' leftIcon={<BiCart />} variant='solid' onClick={buying} size='sm' > Comprar  </Button>
                         </Box>
                     </Box>
 

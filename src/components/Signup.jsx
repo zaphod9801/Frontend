@@ -11,7 +11,8 @@ import { useForm } from 'react-hook-form'
 import { BiCaretUpCircle, BiLeftArrowAlt } from "react-icons/bi";
 import * as API from "../services/getInfo";
 import { gql, useQuery, useMutation } from '@apollo/client';
-
+import Swal from 'sweetalert2'
+import {  useNavigate  } from "react-router-dom";
 
 const API_URL = "http://localhost:3002";
 
@@ -42,12 +43,13 @@ export function Signup() {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
     const [mutateUsers, { data, loading, error }] = useMutation(createUser);
-
+    let navigate = useNavigate()
 
 
 
 
     const onSubmit = async (values) => {
+        
         const response = await fetch(`${API_URL}/auth/signup`, {
             method: 'POST',
             headers: new Headers({
@@ -59,16 +61,34 @@ export function Signup() {
                 email: values.email,
                 password: values.password
             })
+            
         });
         if (response.ok) {
             const jwt = await response.text();
             localStorage.setItem('token', jwt);
             console.log(jwt);
 
-
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Registro exitoso',
+                showConfirmButton: false,
+                timer: 1000
+              })
+            
+              navigate('/');
+              
         } else {
             console.log(response.status);
             console.log(await response.text());
+            
+            Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'Error en el registro, por favor revisa los campos',
+                showConfirmButton: false,
+                timer: 1500
+              })
         }
     };
 
@@ -104,6 +124,7 @@ export function Signup() {
                                         variant='filled'
                                         placeholder="Nombre"
                                         bgColor="green.100"
+                                        required
                                         _placeholder={{ color: 'black' }}
                                         htmlSize={30}
                                         width='auto'
@@ -119,6 +140,7 @@ export function Signup() {
                                         variant='filled'
                                         bgColor="green.100"
                                         placeholder="Apellido"
+                                        required
                                         _placeholder={{ color: 'black' }}
                                         htmlSize={30}
                                         width='auto'
@@ -134,6 +156,7 @@ export function Signup() {
                                         variant='filled'
                                         bgColor="green.100"
                                         placeholder="Email"
+                                        required
                                         _placeholder={{ color: 'black' }}
                                         htmlSize={30}
                                         width='auto'
@@ -152,6 +175,7 @@ export function Signup() {
                                             htmlSize={30}
                                             width='auto'
                                             bgColor="green.100"
+                                            required
                                             type={show ? 'text' : 'password'}
                                             placeholder='Contraseña'
                                             _placeholder={{ color: 'black' }}

@@ -28,7 +28,6 @@
   
   .scrollable-divC {
     background-color: rgba(180, 211, 131, 1);
-    width: 300px;
     overflow: auto;
     margin: 10px;
     margin-top: 1rem;

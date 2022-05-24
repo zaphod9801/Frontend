@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { FaPlus } from "react-icons/fa";
 import { BiCart, BiTrash, BiCylinder } from "react-icons/bi";
 import { BinItem } from "./BinItem.";
+import Swal from 'sweetalert2'
 
 
 export const getThings = gql`{
@@ -63,7 +64,6 @@ export function BinList() {
           id
         }
         }
-    
     `
 
 
@@ -74,8 +74,18 @@ export function BinList() {
         refetchQueries: [{ query: getThings }],
     });
     const onSubmit = async (values) => {
-        create();
 
+
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Creación exitosa',
+            showConfirmButton: false,
+            timer: 1000
+        })
+
+        create();
+        onClose();
     };
 
 
@@ -83,88 +93,91 @@ export function BinList() {
 
         <>
 
-            <MenuH />
-            <Center>
-                <Box bgColor="orange.100" px={10} pb={5} mt={6} mb={5} w='400px' borderRadius="3xl">
 
-                    <VStack>
-                        <Box mb={-4}>
-                            <HStack>
-                                <Icon as={BiCylinder} color="green" w={10} h={10} mb={2} />
-                                <Heading as="h1" size="lg" p={4} color="green">
-                                    Canecas
-                                </Heading>
-                            </HStack>
-                        </Box>
-                        <Center>
-                            <Box>
-                                <div className="scrollable-div">
-                                    <SimpleGrid spacing={4} columns={1}>
-
-                                        {canecas.map(caneca => (
-                                            <BinItem key={caneca.id} {...caneca} />
-                                        ))}
-
-                                    </SimpleGrid>
-                                </div>
-                                <Box m={3} ml={150}>
-                                    <Button colorScheme='green' variant='solid' onClick={onOpen} leftIcon={<FaPlus />}
-                                    > Agregar Caneca  </Button>
+            <div className="flex h-screen overflow-hidden">
+                <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+                    <Box bgColor="white"  px={10} pb={5} mt={1} mb={5} borderRadius="3xl">
+                        <MenuH />
+                        <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+                            <VStack>
+                                <Box mb={-4}>
+                                    <HStack>
+                                        <Icon as={BiCylinder} color="green" w={10} h={10} mb={2} />
+                                        <Heading as="h1" size="lg" p={4} color="green">
+                                            Canecas
+                                        </Heading>
+                                    </HStack>
                                 </Box>
-                            </Box >
-                        </Center>
-                    </VStack>
+                                <Center>
+                                    <Box>
+                                        <div className="scrollable-divC">
+                                            <SimpleGrid spacing={5} columns={[1, 2, 3]}>
 
-                </Box>
-            </Center>
+                                                {canecas.map(caneca => (
+                                                    <BinItem key={caneca.id} {...caneca} />
+                                                ))}
 
-
-            <Drawer
-                isOpen={isOpen}
-                placement='right'
-                initialFocusRef={name}
-                onClose={onClose}
-            >
-                <DrawerOverlay />
-                <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader borderBottomWidth='1px'>
-                        Crear nueva caneca
-                    </DrawerHeader>
-
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <DrawerBody>
-
-                            <VStack divider={<StackDivider borderColor='gray.200' />}
-                                spacing={4}
-                                align='stretch'>
-
-
-
-                                <Input
-                                    id='idProduct'
-                                    variant='filled'
-                                    bgColor="green.100"
-                                    placeholder="Nombre Caneca"
-                                    _placeholder={{ color: 'black' }}
-                                    htmlSize={30}
-                                    width='auto'
-                                    value={name}
-                                    onChange={(data) => setName(data.target.value)}
-                                />
+                                            </SimpleGrid>
+                                        </div>
+                                        <Box m={3} ml={4}>
+                                            <Button colorScheme='green' variant='solid' onClick={onOpen} leftIcon={<FaPlus />}
+                                            > Agregar Caneca  </Button>
+                                        </Box>
+                                    </Box >
+                                </Center>
                             </VStack>
-                        </DrawerBody>
+                        </div>
+                    </Box>
+                </div>
 
-                        <DrawerFooter borderTopWidth='1px'>
-                            <Button variant='outline' mr={3} onClick={onClose}>
-                                Cancelar
-                            </Button>
-                            <Button colorScheme='green' variant='solid'
-                                type='submit' isLoading={isSubmitting}> Crear  </Button>
-                        </DrawerFooter>
-                    </form>
-                </DrawerContent>
-            </Drawer>
+
+                <Drawer
+                    isOpen={isOpen}
+                    placement='right'
+                    initialFocusRef={name}
+                    onClose={onClose}
+                >
+                    <DrawerOverlay />
+                    <DrawerContent>
+                        <DrawerCloseButton />
+                        <DrawerHeader borderBottomWidth='1px'>
+                            Crear nueva caneca
+                        </DrawerHeader>
+
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <DrawerBody>
+
+                                <VStack divider={<StackDivider borderColor='gray.200' />}
+                                    spacing={4}
+                                    align='stretch'>
+
+
+
+                                    <Input
+                                        id='idProduct'
+                                        variant='filled'
+                                        bgColor="green.100"
+                                        placeholder="Nombre Caneca"
+                                        _placeholder={{ color: 'black' }}
+                                        htmlSize={30}
+                                        width='auto'
+                                        value={name}
+                                        onChange={(data) => setName(data.target.value)}
+                                    />
+                                </VStack>
+                            </DrawerBody>
+
+                            <DrawerFooter borderTopWidth='1px'>
+                                <Button variant='outline' mr={3} onClick={onClose}>
+                                    Cancelar
+                                </Button>
+                                <Button colorScheme='green' variant='solid'
+                                    type='submit' isLoading={isSubmitting}> Crear  </Button>
+                            </DrawerFooter>
+                        </form>
+                    </DrawerContent>
+                </Drawer>
+            </div>
         </>
 
     )

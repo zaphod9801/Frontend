@@ -65,6 +65,13 @@ export function Login() {
         } else {
             console.log(response.status);
             console.log(await response.text());
+            Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'Correo o contraseña equivocados',
+                showConfirmButton: false,
+                timer: 1500
+              })
         }
     };
 
@@ -102,6 +109,7 @@ export function Login() {
                                         variant='filled'
                                         bgColor="green.100"
                                         placeholder="Email"
+                                        required
                                         _placeholder={{ color: 'black' }}
                                         htmlSize={30}
                                         width='auto'
@@ -120,6 +128,7 @@ export function Login() {
                                             htmlSize={30}
                                             width='auto'
                                             bgColor="green.100"
+                                            required
                                             type={show ? 'text' : 'password'}
                                             placeholder='Contraseña'
                                             _placeholder={{ color: 'black' }}
