@@ -88,13 +88,14 @@ export function User() {
                     </div>
                     <Box >
                       <div className="scrollable-divC">
+                        <Text fontSize="xl" color="gray.500" mb={5}>
+                          Proveedores:
+                        </Text>
                         <VStack spacing={4}>
-
                           {providers.map(provider => (
                             <ProviderItem key={provider.id} {...provider} />
                           ))}
                         </VStack>
-
                       </div>
                     </Box>
                   </Box >

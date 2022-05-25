@@ -23,6 +23,7 @@ export const getProviders = gql`{
 
 export function ProductDetails() {
     const [providers, setProviders] = useState([]);
+    const [cantidad, setCantidad] = useState(0);
 
     const location = useLocation();
     const { from } = location.state;
@@ -32,7 +33,7 @@ export function ProductDetails() {
 
     mutation {updateProductItem(updateProductItemInput: {
         id: "${from.id}"
-        quantity: ${from.quantity + 1}
+        quantity: ${from.quantity + cantidad}
     }){
         id
         quantity
@@ -41,13 +42,13 @@ export function ProductDetails() {
     const [buy] = useMutation(buyProduct, {
         variables: {
             id: from.id,
-            quantity: from.quantity + 1
+            quantity: from.quantity + cantidad
         },
         refetchQueries: [{ query: getProductItems }],
     });
 
     const buying = async () => {
-
+        console.log(cantidad);
         buy()
 
         Swal.fire({
@@ -115,6 +116,31 @@ export function ProductDetails() {
         })
 
     }
+    
+    const mostartCompra = () => {
+        Swal.fire({
+            title: 'Compra',
+            text: "Ingresa la cantidad a comprar",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Comprar!',
+            html: `<input type="text" id="cantidad" class="swal2-input" placeholder="Cantidad">`,
+            preConfirm: () => {
+                const cant = Swal.getPopup().querySelector('#cantidad').value
+                return { cant: cant}
+              }
+        }).then( async (result) => {
+            if (result.isConfirmed) {
+                const c = parseInt(result.value.cant);
+                console.log(c===10)
+                await setCantidad(c);
+                buying();
+
+            }
+        })
+
+    }
 
     return (
 
@@ -154,7 +180,7 @@ export function ProductDetails() {
                                                 > Cancelar  </Button>
                                                 <Button colorScheme='red' variant='outline' leftIcon={<BiTrash />} onClick={mostartAlert}
                                                 > Eliminar Producto  </Button>
-                                                <Button colorScheme='green' variant='solid' leftIcon={<BiCart />} onClick={buying}
+                                                <Button colorScheme='green' variant='solid' leftIcon={<BiCart />} onClick={mostartCompra}
                                                 > Comprar Producto  </Button>
                                             </HStack>
                                         </VStack>

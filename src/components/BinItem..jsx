@@ -13,8 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import "./styles.css";
 import { gql, useMutation } from '@apollo/client';
-import {BiTrash } from "react-icons/bi";
-import {getThings} from "./BinList";
+import { BiTrash } from "react-icons/bi";
+import { getThings } from "./BinList";
 import Swal from 'sweetalert2'
 
 
@@ -29,7 +29,7 @@ export function BinItem(caneca) {
     
     `
     const [eliminate] = useMutation(deleteBin, {
-        
+
         variables: {
             id: caneca.id,
         },
@@ -45,35 +45,35 @@ export function BinItem(caneca) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, eliminar!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
 
                 eliminate();
 
-              Swal.fire(
-                'Eliminado!',
-                'La caneca ha sido eliminada.',
-                'success'
-              )
+                Swal.fire(
+                    'Eliminado!',
+                    'La caneca ha sido eliminada.',
+                    'success'
+                )
             }
-          })
-          
+        })
+
     }
 
 
-    
+
     return (
 
         <>
 
             <Center>
-                <Box maxW='sm'  overflow='hidden' bgColor="orange.100" pb={2} borderRadius="3xl" borderWidth='1px'>
+                <Box maxW='sm' overflow='hidden' bgColor="orange.100" pb={2} borderRadius="3xl" borderWidth='1px' width="200px">
                     <VStack>
-                        <Text key={caneca.id} fontSize="md" mr={110} mt={3} color="gray.500"> {caneca.name}</Text>
+                        <Text key={caneca.id} fontSize="md" m={3} mt={6}  color="gray.500"> {caneca.name}</Text>
+                        <Box  >
+                            <Button colorScheme='red' variant='outline' size='sm' leftIcon={<BiTrash />} onClick={mostartAlert}> Eliminar  </Button>
+                        </Box>
                     </VStack>
-                    <Box ml={145} mr={5}>
-                        <Button colorScheme='red' variant='outline' size='sm' leftIcon={<BiTrash />} onClick={mostartAlert}> Eliminar  </Button>
-                    </Box>
                 </Box>
             </Center>
 
