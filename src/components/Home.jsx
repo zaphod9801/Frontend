@@ -7,6 +7,7 @@ import "./styles.css";
 import { gql, useQuery } from '@apollo/client';
 import { NotificationItem } from './NotificationItem';
 import { MenuH } from './Menu';
+import { Navbar } from "./Navbar";
 import { BiHomeAlt } from "react-icons/bi";
 
 

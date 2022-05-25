@@ -67,7 +67,7 @@ export function ProductList() {
     mutation {
         createProductItem(createProductItemInput: 
           {
-                quantity: 1,
+                quantity: 0,
                 productLot: "melo",
                 productId: "${idProduct}",
           }) {
@@ -83,7 +83,7 @@ export function ProductList() {
     const [create] = useMutation(createProductItem, {
         variables: {
             productId: `${idProduct}`,
-            quantity: 1,
+            quantity: 0,
             productLot: "melo",
         },
         refetchQueries: [{ query: getProductItems }],
@@ -101,7 +101,7 @@ export function ProductList() {
         Swal.fire({
             position: 'top-center',
             icon: 'success',
-            title: 'Compra exitosa',
+            title: 'Producto agregado',
             showConfirmButton: false,
             timer: 1000
         })

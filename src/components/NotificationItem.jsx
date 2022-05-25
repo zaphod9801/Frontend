@@ -46,7 +46,7 @@ export function NotificationItem(product) {
             title: 'Compra',
             text: "Ingresa la cantidad a comprar",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: 'green',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Comprar!',
             html: `<input type="text" id="cantidad" class="swal2-input" placeholder="Cantidad">`,
@@ -75,7 +75,7 @@ export function NotificationItem(product) {
                 <Box bgColor="orange.100" px={10} pb={2} borderRadius="3xl" w='400px' borderWidth='1px'>
                     <VStack >
                         <Text fontSize="md" ml={1} mt={3} color="gray.500">
-                            {`Te quedaste sin ${product.name}, deberías comprar ahora!`}
+                            {`Te quedaste sin ${product.product.name}, deberías comprar ahora!`}
                         </Text>
                     </VStack>
                     <Box ml={240}>

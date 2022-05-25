@@ -99,7 +99,7 @@ export function ProductDetails() {
             text: "Eliminaras un producto",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: 'green',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, eliminar!'
         }).then((result) => {
@@ -122,7 +122,7 @@ export function ProductDetails() {
             title: 'Compra',
             text: "Ingresa la cantidad a comprar",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: 'green',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Comprar!',
             html: `<input type="text" id="cantidad" class="swal2-input" placeholder="Cantidad">`,
