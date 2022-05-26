@@ -6,6 +6,7 @@ import { ProductList } from "./components/ProductsList";
 import { ProductDetails } from "./components/ProductDetails";
 import { BinList } from "./components/BinList";
 import {User} from "./components/User"
+import { BinItemProducts} from "./components/BinItemProducts"
 
 export function App() {
 
@@ -19,6 +20,7 @@ export function App() {
         <Route path="producto" element={<ProductDetails />} />
         <Route path="canecas" element={<BinList />} />
         <Route path="perfil" element={<User />} />
+        <Route path="caneca" element={<BinItemProducts />} />
       </Routes>
     </>
 

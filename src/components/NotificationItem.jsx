@@ -4,7 +4,7 @@ import {
 import { BiCart } from "react-icons/bi";
 import { gql, useMutation } from '@apollo/client';
 import React, { useState } from "react";
-
+import { getProductItems } from "./ProductsList"
 
 
 export function NotificationItem(product) {
@@ -25,7 +25,8 @@ export function NotificationItem(product) {
         variables: {
             id: product.id,
             quantity: product.quantity + cantidad
-        }
+        },
+        refetchQueries: [{ query: getProductItems }],
     });
 
     const buying = async () => {

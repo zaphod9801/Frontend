@@ -15,7 +15,7 @@ export function ProductItemDetails(product) {
     
     
     const property = {
-        imageUrl: 'https://picsum.photos/500/500',
+        imageUrl: product.image,
         imageAlt: 'Rear view of modern home with pool',
         title: `${product.product.name}`,
         formattedPrice: `${product.product.price}$`,

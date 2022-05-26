@@ -26,16 +26,46 @@ export const getThings = gql`{
         name
         id
       }
+      productItems(findProductItemInput:{}) {
+        id
+        product {
+          name
+          brand {
+            name
+          }
+          price
+        }
+        
+        quantity
+      }
   }`
 
+  export const getThings2 = gql`{
+      productItems(findProductItemInput:{}) {
+        id
+        product {
+          name
+          brand {
+            name
+          }
+          price
+        }
+        
+        quantity
+      }
+  }`
 
 
 export function BinList() {
 
     const [user, setUser] = useState({});
     const [canecas, setCanecas] = useState([]);
+    const [products, setProducts] = useState([]);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [name, setName] = useState("");
+    const [size, setSize] = useState(0);
+    
+    let copia;
 
     const {
         handleSubmit,
@@ -43,18 +73,22 @@ export function BinList() {
         formState: { errors, isSubmitting },
     } = useForm()
 
-    const { loading, error, data } = useQuery(getThings, {
+    const can = useQuery(getThings, {
 
         pollInterval: 1,
         onCompleted: (data) => {
             document.title = "Canecas";
             setUser(data.me);
             setCanecas(data.smartBins);
+            setProducts(data.productItems);
+            copia = [...products];
         },
         refetchInterval: 1000
     }
 
     );
+    
+    copia = [...products];
 
 
     const createSmartBin = gql`
@@ -87,6 +121,8 @@ export function BinList() {
         create();
         onClose();
     };
+    
+
 
 
     return (
@@ -96,7 +132,7 @@ export function BinList() {
 
             <div className="flex h-screen overflow-hidden">
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                    <Box bgColor="white"  px={10} pb={5} mt={1} mb={5} borderRadius="3xl">
+                    <Box bgColor="white"  px={10} mt={1}  borderRadius="3xl">
                         <MenuH />
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <VStack>
@@ -111,10 +147,11 @@ export function BinList() {
                                 <Center>
                                     <Box>
                                         <div className="scrollable-divC">
-                                            <SimpleGrid spacing={5} columns={[1, 2, 3]}>
+                                            <SimpleGrid spacing={5} columns={[1, 2, 3, 4]}>
 
                                                 {canecas.map(caneca => (
-                                                    <BinItem key={caneca.id} {...caneca} />
+                                                    
+                                                    <BinItem key={caneca.id} {...{caneca: caneca, products: copia.splice(caneca, Math.ceil(products.length/canecas.length))    }}/>
                                                 ))}
 
                                             </SimpleGrid>

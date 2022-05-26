@@ -26,8 +26,10 @@ export function ProductDetails() {
     const [cantidad, setCantidad] = useState(0);
 
     const location = useLocation();
-    const { from } = location.state;
+    const {from} = location.state;
     let navigate = useNavigate();
+    
+
 
     const buyProduct = gql`
 
@@ -160,9 +162,9 @@ export function ProductDetails() {
                                     </HStack>
                                 </Box>
                                 <Box>
-                                    <div className="scrollable-divP">
+                                    <div className="scrollable-divC">
                                         <Center>
-                                            <ProductItemDetails {...from} />
+                                            <ProductItemDetails {...from}/>
                                         </Center>
                                     </div>
                                     <Box >

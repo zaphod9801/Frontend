@@ -118,7 +118,7 @@ export function ProductList() {
 
             <div className="flex h-screen overflow-hidden">
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                    <Box bgColor="white" px={10} pb={5} mt={1} mb={5} borderRadius="3xl">
+                    <Box bgColor="white" px={10}  mt={1} borderRadius="3xl">
 
                         <MenuH />
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
